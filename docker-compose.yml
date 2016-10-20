@@ -2,11 +2,13 @@ elasticsearch:
   image: elasticsearch:latest
   command: elasticsearch -Des.network.host=0.0.0.0
   ports:
-    - "9200:9200"
-    - "9300:9300"
-
+    - 9200:9200
+    - 9300:9300
+  volumes:
+    #- ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    - ./elasticsearch/data:/usr/share/elasticsearch/data
 logstash:
-  build: logstash/
+  image: hacbq/logstash:latest
   command: logstash -f /etc/logstash/conf.d/logstash-config.conf
   volumes:
     - ./logstash/config:/etc/logstash/conf.d
@@ -16,11 +18,13 @@ logstash:
     - "5000:5000"
   links:
     - elasticsearch
+  environment:
+    - LS_HEAP_SIZE=2048m
 kibana:
-  build: kibana/
+  image: hacbq/kibana:latest
   volumes:
     - ./kibana/config/:/opt/kibana/config/
   ports:
-    - "5601:5601"
+    - 5601:5601
   links:
     - elasticsearch
