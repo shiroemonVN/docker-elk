@@ -18,8 +18,8 @@ services:
     volumes:
       - ./logstash/config:/etc/logstash/conf.d
       - ./logstash/patterns:/opt/logstash/patterns
-    ports:
-      - "5000:5000"
+    ports:      
+      - "5044:5044"
     networks:
       - docker_elk
     depends_on:
