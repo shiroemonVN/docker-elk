@@ -2,16 +2,17 @@ version: '2'
 
 services:
   elasticsearch:
-    build: elasticsearch/
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    environment:
-      ES_JAVA_OPTS: "-Xms10g -Xmx10g"
-    networks:
-      - docker_elk
-    volumes:    
-      - ./elasticsearch/data:/usr/share/elasticsearch/data
+  build: elasticsearch/
+  command: elasticsearch -Des.network.host=_non_loopback_ -Des.cluster.name: my-cluster
+  ports:
+    - "9200:9200"
+    - "9300:9300"
+  environment:
+    ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+  networks:
+    - docker_elk
+  volumes:
+    - ./elasticsearch/data:/usr/share/elasticsearch/data
   logstash:
     build: logstash/
     command: -f /etc/logstash/conf.d/
