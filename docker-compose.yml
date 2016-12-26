@@ -6,8 +6,8 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
-    environment:
-      ES_JAVA_OPTS: "-Xms10g -Xmx10g"
+    #environment:
+    #  ES_JAVA_OPTS: "-Xms10g -Xmx10g"
     networks:
       - docker_elk
   logstash:
